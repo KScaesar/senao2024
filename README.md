@@ -69,7 +69,7 @@ This repository contains two RESTful HTTP APIs for creating and verifying accoun
 ```json
 {
   "success": true,
-  "reason": "account created successfully"
+  "reason": ""
 }
 ```
 
@@ -90,7 +90,7 @@ This repository contains two RESTful HTTP APIs for creating and verifying accoun
 ```json
 {
   "success": true,
-  "reason": "password is ok"
+  "reason": ""
 }
 ```
 
