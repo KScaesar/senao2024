@@ -29,7 +29,12 @@ This repository contains two RESTful HTTP APIs for creating and verifying accoun
 
 3. Run the Docker container:
    ```bash
-   docker compose up -d
+   APP_PORT=12450 MYSQL_PORT=3306 docker compose up -d
+   ```
+   
+4. Close the Docker container:
+   ```bash
+   docker compose down -v
    ```
 
 ## Access APIs
@@ -75,7 +80,7 @@ This repository contains two RESTful HTTP APIs for creating and verifying accoun
 
 ### API 2: Verify Account and Password
 
-**Endpoint:** `/v1/api/account/verify`  
+**Endpoint:** `/v1/api/account/login`  
 **Method:** `POST`
 
 **Request Payload:**
@@ -89,8 +94,8 @@ This repository contains two RESTful HTTP APIs for creating and verifying accoun
 **Response Payload:**
 ```json
 {
-  "success": true,
-  "reason": ""
+  "success": false,
+  "reason": "Too many password verification attempts. Please wait 1 minute before trying again."
 }
 ```
 
@@ -114,3 +119,5 @@ This repository contains two RESTful HTTP APIs for creating and verifying accoun
 3. `python -m venv .venv`
 4. `source .venv/bin/activate`
 5. `pip install -r requirements.txt`
+6. `DOCKER_BUILDKIT=1 docker build --build-arg BUILDKIT_INLINE_CACHE=1 -f Dockerfile -t x246libra/senaon2024:v0.1.0 .`
+7. `docker push x246libra/senaon2024:v0.1.0`

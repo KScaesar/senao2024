@@ -1,6 +1,10 @@
 from sqlmodel import create_engine, Session
 
-db_url = f"sqlite:///database.db"
+# db_url = f"sqlite:///database.db"
+
+# https://stackoverflow.com/questions/54477829/cryptography-is-required-for-sha256-password-or-caching-sha2-password
+# db_url = "mysql+pymysql://root:1234@127.0.0.1:3306/testdata"
+db_url = "mysql+pymysql://root:1234@mysql.vHost:3306/testdata"
 engine = create_engine(db_url, echo=True)
 
 
