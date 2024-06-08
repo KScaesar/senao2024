@@ -3,14 +3,14 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
 from src.adapters.api.Account import AccountRouter
-from src.adapters.api.util import ErrorResponse
-
+from src.adapters.api.response import ErrorResponse
 
 def router() -> FastAPI:
     mux = FastAPI()
     mux.add_exception_handler(RequestValidationError, validation_exception_handler)
 
     mux.include_router(AccountRouter)
+
     return mux
 
 

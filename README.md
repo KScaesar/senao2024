@@ -36,14 +36,14 @@ This repository contains two RESTful HTTP APIs for creating and verifying accoun
 
 - Create Account API:  
     ```bash
-    curl -X POST http://localhost:12450/v1/api/account \
+    curl -X POST http://127.0.0.1:12450/api/v1/accounts \
     -H "Content-Type: application/json" \
     -d '{"username": "caesar", "password": "Senao2450"}'
     ```
 
 - Verify Account API:  
     ```bash
-    curl -X POST http://localhost:12450/v1/api/account/verify \
+    curl -X POST http://127.0.0.1:12450/api/v1/accounts/login \
     -H "Content-Type: application/json" \
     -d '{"username": "caesar", "password": "Senao2450"}'
     ```
