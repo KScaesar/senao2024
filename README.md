@@ -95,7 +95,7 @@ This repository contains two RESTful HTTP APIs for creating and verifying accoun
 ```json
 {
   "success": false,
-  "reason": "Too many password verification attempts. Please wait 1 minute before trying again."
+  "reason": "Password does not match. Remaining 2 retry attempts."
 }
 ```
 

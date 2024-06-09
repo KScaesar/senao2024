@@ -1,6 +1,7 @@
-import src.app.AccountException as AccountException
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
+
+import src.app.AccountException as AccountException
 from src.adapters.api.response import (
     Response,
     SuccessResponse,
@@ -31,15 +32,19 @@ async def create(
       req: CreateAccountParams,
       svc: AccountService = Depends(),
 ):
+    exception_code = {
+        AccountException.DuplicatedUsernameError: status.HTTP_409_CONFLICT,
+        AccountException.InvalidValueError: status.HTTP_400_BAD_REQUEST,
+    }
+
     try:
         svc.create_account(req)
         return SuccessResponse().serialize()
-    except AccountException.DuplicatedUsernameError as e:
-        return JSONResponse(status_code=status.HTTP_409_CONFLICT, content=ErrorResponse(e).model_dump())
-    except AccountException.InvalidValueError as e:
-        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content=ErrorResponse(e).model_dump())
-    except Exception as e:
-        return JSONResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content=ErrorResponse(e).model_dump())
+    except (Exception) as e:
+        return JSONResponse(
+            status_code=exception_code.get(type(e), status.HTTP_500_INTERNAL_SERVER_ERROR),
+            content=ErrorResponse(e).model_dump(),
+        )
 
 
 @AccountRouter.post(
@@ -57,14 +62,17 @@ async def login(
       req: VerifyAccountAndPasswordParams,
       svc: AccountService = Depends(),
 ):
+    exception_code = {
+        AccountException.UsernameNotFoundError: status.HTTP_404_NOT_FOUND,
+        AccountException.InvalidValueError: status.HTTP_400_BAD_REQUEST,
+        AccountException.PasswordVerificationLimitExceeded: status.HTTP_429_TOO_MANY_REQUESTS,
+    }
+
     try:
         svc.login(req)
         return SuccessResponse().serialize()
-    except AccountException.UsernameNotFoundError as e:
-        return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content=ErrorResponse(e).model_dump())
-    except AccountException.InvalidValueError as e:
-        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content=ErrorResponse(e).model_dump())
-    except AccountException.PasswordVerificationLimitExceeded as e:
-        return JSONResponse(status_code=status.HTTP_429_TOO_MANY_REQUESTS, content=ErrorResponse(e).model_dump())
-    except Exception as e:
-        return JSONResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content=ErrorResponse(e).model_dump())
+    except (AccountException.AccountError, Exception) as e:
+        return JSONResponse(
+            status_code=exception_code.get(type(e), status.HTTP_500_INTERNAL_SERVER_ERROR),
+            content=ErrorResponse(e).model_dump(),
+        )
