@@ -57,7 +57,7 @@ This repository contains two RESTful HTTP APIs for creating and verifying accoun
 
 ### API 1: Create Account
 
-**Endpoint:** `/v1/api/account`  
+**Endpoint:** `/api/v1/accounts`  
 **Method:** `POST`
 
 **Request Payload:**
@@ -80,7 +80,7 @@ This repository contains two RESTful HTTP APIs for creating and verifying accoun
 
 ### API 2: Verify Account and Password
 
-**Endpoint:** `/v1/api/account/login`  
+**Endpoint:** `/api/v1/accounts/login`  
 **Method:** `POST`
 
 **Request Payload:**
