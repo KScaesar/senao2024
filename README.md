@@ -9,6 +9,11 @@ This repository contains two RESTful HTTP APIs for creating and verifying accoun
   - [APIs Spec](#apis-spec)
     - [API 1: Create Account](#api-1-create-account)
     - [API 2: Verify Account and Password](#api-2-verify-account-and-password)
+  - [Software Architecture](#software-architecture)
+    - [adapters](#adapters)
+      - [api](#api)
+      - [database](#database)
+    - [app](#app)
   - [Setup For Developer](#setup-for-developer)
     - [develop for localhost](#develop-for-localhost)
     - [develop for container](#develop-for-container)
@@ -101,6 +106,27 @@ This repository contains two RESTful HTTP APIs for creating and verifying accoun
 
 **Note:** If password verification fails five times, the user must wait one minute before attempting again. The API will return an HTTP status code `429 Too Many Requests`.
 
+## Software Architecture
+
+![software architecture](asset/software_architecture.png)
+
+### adapters
+
+負責處理與外界的交互，將外部系統、用戶接口等，連接到應用程式。
+
+#### api
+
+負責處理應用程式對外的 API 接口。
+
+接收外部請求並將其轉換為應用程式可以理解的 command 或 query 。
+
+#### database
+
+儲存、查詢和管理資料的功能。
+
+### app
+
+應用程式的主要業務規則。
 
 ## Setup For Developer
 
